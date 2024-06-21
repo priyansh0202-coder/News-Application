@@ -11,21 +11,44 @@ const NewsItem = ({ category, searchQuery }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 12;
 
-    useEffect(() => {
-        // let key = import.meta.env.VITE_NEWS_API_KEY;
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&pageSize=100&apiKey=e9a947a395174904ae5d9e8662d757ae`;
+    // useEffect(() => {
+    //     // let key = import.meta.env.VITE_NEWS_API_KEY;
+    //     let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&pageSize=100&apiKey=e9a947a395174904ae5d9e8662d757ae`;
 
+    //     const fetchArticles = async () => {
+    //         try {
+    //             const response = await axios.get(url);
+    //             setArticles(response.data.articles)
+
+    //         } catch (error) {
+    //             console.log("error fetching the news articles:", error)
+    //         }
+    //     }
+    //     fetchArticles();
+    // }, [category]);
+
+    useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await axios.get(url);
-                setArticles(response.data.articles)
-
+                const response = await axios.get(`https://newsapi.org/v2/top-headlines`, {
+                    params: {
+                        country: 'in',
+                        category: category,
+                        pageSize: 100,
+                        apiKey: e9a947a395174904ae5d9e8662d757ae
+                    },
+                    headers: {
+                        'Upgrade-Insecure-Requests': 1
+                    }
+                });
+                setArticles(response.data.articles);
             } catch (error) {
-                console.log("error fetching the news articles:", error)
+                console.error("Error fetching the news articles:", error);
             }
-        }
+        };
         fetchArticles();
     }, [category]);
+
 
     useEffect(() => {
         localStorage.setItem("fav", JSON.stringify(fav));
