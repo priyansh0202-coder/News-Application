@@ -11,25 +11,13 @@ const NewsItem = ({ category, searchQuery }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 12;
 
-    // useEffect(() => {
-    //     const fetchArticles = async () => {
-    //         try {
-    //             const response = await axios.get('/api/news', { params: { category } });
-    //             setArticles(response.data.articles);
-    //         } catch (error) {
-    //             console.log("error fetching the news articles:", error);
-    //         }
-    //     }
-    //     fetchArticles();
-    // }, [category]);
-
     useEffect(() => {
         const fetchArticles = async () => {
             try {
                 const response = await axios.get(`/api/news?category=${category}`);
                 setArticles(response.data.articles);
             } catch (error) {
-                console.error("Error fetching the news articles:", error.message); // Add log to check the error message
+                console.error("Error fetching the news articles:", error.message);
             }
         }
         fetchArticles();
